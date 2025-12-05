@@ -15,12 +15,8 @@
 ```html
 <weather-widget></weather-widget>
 
-<script src="https://TynysA.github.io/custom-vue-element-weather/widget.js"></script>
+<script src="https://TynysA.github.io/custom-vue-element-weather/dist/widget.js"></script>
 ```
-
-Готово!  
-Компонент полностью изолирован через **Shadow DOM**, стили сайта не ломаются.
-
 ---
 
 ## ✨ Features
@@ -42,7 +38,7 @@
 Используйте через CDN (GitHub Pages):
 
 ```html
-<script src="https://TynysA.github.io/custom-vue-element-weather/widget.js"></script>
+<script src="https://TynysA.github.io/custom-vue-element-weather/dist/widget.js"></script>
 <weather-widget></weather-widget>
 ```
 
@@ -90,31 +86,6 @@ custom-vue-element-weather/
  ├─ tsconfig.json
  └─ README.md
 ```
-
----
-
-## 🌐 GitHub Pages Deployment
-
-Включите публикацию:
-
-**Settings → Pages → Build and Deployment:**
-
-- **Source:** Deploy from a branch  
-- **Branch:** `main`  
-- **Folder:** `/dist`  
-
-После сохранения сайт будет доступен по адресу:
-
-```
-https://TynysA.github.io/custom-vue-element-weather/
-```
-
-И сам виджет по адресу:
-
-```
-https://TynysA.github.io/custom-vue-element-weather/widget.js
-```
-
 ## 🤝 Contributing
 
 PRs welcome — можно добавить:
