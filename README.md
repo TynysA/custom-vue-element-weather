@@ -33,7 +33,6 @@ Add the widget to any HTML file:
 - ⚙️ **Settings screen** (reorder, add, delete cities)
 - 🔍 **Search with autocomplete** (debounced API calls)
 - ❌ **Smooth delete animation**
-- 🔒 **Fully isolated styles via Shadow DOM**
 - 📦 **Single production bundle:** `dist/widget.js`
 
 ---
