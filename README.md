@@ -21,13 +21,17 @@ Add the widget to any HTML file:
 <weather-widget></weather-widget>
 
 <script src="https://TynysA.github.io/custom-vue-element-weather/dist/widget.js"></script>
-# ✨ Features
 
-🌤️ Weather data from WeatherAPI
-📍 Multiple saved cities
-🔄 Swipe slider between cities
-••• Navigation dots
-⚙️ Settings screen (reorder, add, delete cities)
-🔍 City search with autocomplete (debounced requests)
-❌ Smooth delete animation
-📦 Single production bundle: dist/widget.js
+--- 
+
+## ✨ Features
+
+- 🌤️ **Weather data from WeatherAPI**
+- 📍 **Supports multiple saved cities**
+- 🔄 **Swipe slider between cities**
+- ••• **Navigation dots**
+- ⚙️ **Settings screen** (reorder, add, delete cities)
+- 🔍 **Search with autocomplete** (debounced API calls)
+- ❌ **Smooth delete animation**
+- 🔒 **Fully isolated styles via Shadow DOM**
+- 📦 **Single production bundle:** `dist/widget.js`
