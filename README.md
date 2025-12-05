@@ -21,7 +21,7 @@ Add the widget to any HTML file:
 <weather-widget></weather-widget>
 
 <script src="https://TynysA.github.io/custom-vue-element-weather/dist/widget.js"></script>
-```html
+```
 --- 
 
 ## ✨ Features
@@ -35,3 +35,5 @@ Add the widget to any HTML file:
 - ❌ **Smooth delete animation**
 - 🔒 **Fully isolated styles via Shadow DOM**
 - 📦 **Single production bundle:** `dist/widget.js`
+
+---
