@@ -1,103 +1,33 @@
 # 🌤️ Custom Vue Weather Widget
 ### Lightweight Weather Web Component (Vue + TypeScript + Shadow DOM)
 
-**custom-vue-element-weather** — это автономный Weather Web Component,
-который можно вставлять **в любой HTML**, без Vue, без сборщиков, без зависимостей.
+**custom-vue-element-weather** is a standalone Weather Web Component  
+that can be embedded **into any HTML page**, with **no Vue**, no bundlers, and no external dependencies.
 
-Погода отображается в виде свайпера с несколькими городами, поиском, drag & drop и экраном настроек.
+The widget displays a swipeable weather carousel with multiple cities, search, drag & drop reordering, and a settings screen.
 
 ---
 
 ## 🚀 Demo / Usage
 
-Подключите виджет в любой HTML-файл:
+You can test the widget directly in your browser:  
+👉 **https://tynysa.github.io/custom-vue-element-weather/public/test.html**
+
+This page loads the widget from the `dist/widget.js` bundle and demonstrates how it behaves inside a regular HTML page.
+
+Add the widget to any HTML file:
 
 ```html
 <weather-widget></weather-widget>
 
 <script src="https://TynysA.github.io/custom-vue-element-weather/dist/widget.js"></script>
-```
----
+# ✨ Features
 
-## ✨ Features
-
-- 🌤️ Получение погоды через WeatherAPI  
-- 📍 Несколько городов  
-- 🔄 Swipe-слайдер между городами  
-- ••• Навигационные dots  
-- ⚙️ Экран настроек (reorder, добавить, удалить)  
-- 🔍 Поиск городов с автоподсказками (debounce)  
-- ❌ Анимация удаления  
-- 🔒 CSS изолирован (Shadow DOM)  
-- 📦 Один файл `dist/widget.js` для продакшена  
-
----
-
-## 📦 Installation
-
-Используйте через CDN (GitHub Pages):
-
-```html
-<script src="https://TynysA.github.io/custom-vue-element-weather/dist/widget.js"></script>
-<weather-widget></weather-widget>
-```
-
----
-
-## 🛠 Development
-
-### Установка:
-
-```bash
-npm install
-```
-
-### Сборка:
-
-```bash
-npm run build
-```
-
-Сборка будет лежать в:
-
-```
-dist/widget.js
-```
-
----
-
-## 📁 Project Structure
-
-```
-custom-vue-element-weather/
- ├─ src/
- │   ├─ components/
- │   ├─ App.vue
- │   ├─ WeatherWidget.vue
- │   ├─ WeatherSettings.vue
- │   ├─ style.scss
- │   └─ widget.ts
- │
- ├─ dist/
- │   └─ widget.js          # финальная сборка (подключается через script)
- │
- ├─ webpack.config.js
- ├─ package.json
- ├─ tsconfig.json
- └─ README.md
-```
-## 🤝 Contributing
-
-PRs welcome — можно добавить:
-
-- геолокацию  
-- hourly forecast  
-- кастомизацию тем  
-- тёмную тему  
-- расширенный дизайн  
-
----
-
-## 📄 License
-
-MIT License.
+🌤️ Weather data from WeatherAPI
+📍 Multiple saved cities
+🔄 Swipe slider between cities
+••• Navigation dots
+⚙️ Settings screen (reorder, add, delete cities)
+🔍 City search with autocomplete (debounced requests)
+❌ Smooth delete animation
+📦 Single production bundle: dist/widget.js
