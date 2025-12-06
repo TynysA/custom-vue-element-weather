@@ -58,10 +58,9 @@ export default {
 
     const next = () => go((index.value + 1) % props.cities.length);
     const prev = () =>
-      go((index.value - 1 + props.cities.length) % props.cities.length);
-
+        go((index.value - 1 + props.cities.length) % props.cities.length);
     onMounted(() => {
-      go(index.value);
+      go(props.activeCity);
     });
 
     return {
@@ -80,6 +79,12 @@ export default {
 <template>
   <div class="widget">
 
+    <!-- SKELETON -->
+    <div v-if="loading" class="skeleton">
+      <div class="skeleton-title"></div>
+      <div class="skeleton-main"></div>
+      <div class="skeleton-lines"></div>
+    </div>
     <div class="top">
       <button class="arrow" @click="prev">‹</button>
       <h3>{{ cities[index].name }}</h3>
@@ -92,9 +97,9 @@ export default {
     <div v-else class="swiper">
       <div class="slides" ref="slider">
         <div
-          class="slide"
-          v-for="(c, i) in cities"
-          :key="i"
+            class="slide"
+            v-for="(c, i) in cities"
+            :key="i"
         >
           <img :src="'https:' + data[i].current.condition.icon" class="icon" />
           <div class="temp">{{ data[i].current.temp_c }}°C</div>
@@ -119,11 +124,11 @@ export default {
       <!-- DOTS -->
       <div class="dots">
         <span
-          v-for="(c, i) in cities"
-          :key="i"
-          class="dot"
-          :class="{ active: i === index }"
-          @click="go(i)"
+            v-for="(c, i) in cities"
+            :key="i"
+            class="dot"
+            :class="{ active: i === index }"
+            @click="go(i)"
         ></span>
       </div>
     </div>

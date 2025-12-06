@@ -1,70 +1,116 @@
 <template>
   <div>
     <WeatherWidget
-      v-if="screen === 'main'"
-      :cities="cities"
-      :activeCity="activeCity"
-      @open-settings="openSettings"
-      @update-city="setActiveCity"
+        v-if="screen === 'main' && cities.length > 0"
+        :cities="cities"
+        :activeCity="activeCity"
+        :theme="props.theme"
+        @open-settings="openSettings"
+        @update-city="setActiveCity"
     />
 
     <WeatherSettings
-      v-else
-      :cities="cities"
-      @close="closeSettings"
-      @update-cities="updateCities"
+        v-else
+        :cities="cities"
+        @update-cities="updateCities"
+        @close="closeSettings"
     />
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { ref, onMounted } from "vue";
 import WeatherWidget from "./components/WeatherWidget.vue";
 import WeatherSettings from "./components/WeatherSettings.vue";
 
-export default {
-  components: { WeatherWidget, WeatherSettings },
+const props = defineProps<{ theme: string }>();
+const screen = ref<"main" | "settings">("main");
+const cities = ref<
+    Array<{ name: string; lat: number; lon: number; isAuto?: boolean }>
+>([]);
 
-  setup() {
-    const screen = ref<"main" | "settings">("main");
+const activeCity = ref(0);
 
-    const cities = ref([
-      { name: "London, UK", lat: 51.5072, lon: -0.1276 },
-      { name: "Moscow, RU", lat: 55.7558, lon: 37.6173 }
-    ]);
+const loadFromLS = () => {
+  const saved = localStorage.getItem("cities");
+  const savedIndex = localStorage.getItem("activeCity");
 
-    const activeCity = ref(0);
+  if (saved) cities.value = JSON.parse(saved);
+  if (savedIndex) activeCity.value = Number(savedIndex);
+};
 
-    const updateCities = (newList: any[]) => {
-      cities.value = newList;
-      localStorage.setItem("cities", JSON.stringify(newList));
-    };
+const saveToLS = () => {
+  localStorage.setItem("cities", JSON.stringify(cities.value));
+  localStorage.setItem("activeCity", activeCity.value.toString());
+};
+const addGeoCity = async () => {
+  return new Promise<void>((resolve) => {
+    if (!navigator.geolocation) {
+      cities.value = [{
+        name: "London, UK",
+        lat: 51.5072,
+        lon: -0.1276,
+      }];
+      return resolve();
+    }
 
-    const setActiveCity = (index: number) => {
-      activeCity.value = index;
-      localStorage.setItem("activeCity", index.toString());
-    };
+    navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
 
-    const openSettings = () => (screen.value = "settings");
-    const closeSettings = () => (screen.value = "main");
+          const url = `https://api.weatherapi.com/v1/search.json?key=d61b770d0f5b45a4911151951250212&q=${lat},${lon}`;
+          const res = await fetch(url);
+          const data = await res.json();
 
-    onMounted(() => {
-      const saved = localStorage.getItem("cities");
-      const savedIndex = localStorage.getItem("activeCity");
+          if (data?.length) {
+            cities.value.unshift({
+              name: data[0].name + " (My Location)",
+              lat,
+              lon,
+              isAuto: true,
+            });
+          } else {
+            cities.value = [{
+              name: "London, UK",
+              lat: 51.5072,
+              lon: -0.1276,
+            }];
+          }
 
-      if (saved) cities.value = JSON.parse(saved);
-      if (savedIndex) activeCity.value = Number(savedIndex);
-    });
+          resolve();
+        },
+        // user denied geolocation → default London
+        () => {
+          cities.value = [{
+            name: "London, UK",
+            lat: 51.5072,
+            lon: -0.1276,
+          }];
+          resolve();
+        }
+    );
+  });
+};
+onMounted(async () => {
+  loadFromLS();
 
-    return {
-      screen,
-      cities,
-      activeCity,
-      openSettings,
-      closeSettings,
-      updateCities,
-      setActiveCity
-    };
+  if (cities.value.length === 0) {
+    await addGeoCity();
   }
+
+  saveToLS();
+});
+const openSettings = () => screen.value = "settings";
+const closeSettings = () => screen.value = "main";
+
+const updateCities = (newList: any[]) => {
+  cities.value = newList;
+  localStorage.setItem("cities", JSON.stringify(cities.value));
+};
+
+const setActiveCity = (index: number) => {
+  activeCity.value = index;
+  localStorage.setItem("activeCity", activeCity.value.toString());
 };
 </script>
