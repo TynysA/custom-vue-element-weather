@@ -22,6 +22,7 @@
 import { ref, onMounted } from "vue";
 import WeatherWidget from "./components/WeatherWidget.vue";
 import WeatherSettings from "./components/WeatherSettings.vue";
+import {API_KEY, API_URL} from "./config/weather";
 
 const props = defineProps<{ theme: string }>();
 const screen = ref<"main" | "settings">("main");
@@ -59,7 +60,7 @@ const addGeoCity = async () => {
           const lat = pos.coords.latitude;
           const lon = pos.coords.longitude;
 
-          const url = `https://api.weatherapi.com/v1/search.json?key=d61b770d0f5b45a4911151951250212&q=${lat},${lon}`;
+          const url = `${API_URL}search.json?key=${API_KEY}&q=${lat},${lon}`;
           const res = await fetch(url);
           const data = await res.json();
 

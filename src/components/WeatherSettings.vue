@@ -52,6 +52,7 @@
 
 <script lang="ts">
 import { ref, watch, PropType } from "vue";
+import {API_KEY, API_URL} from "../config/weather";
 
 interface City {
   name: string;
@@ -76,8 +77,6 @@ export default {
     const query = ref("");
     const results = ref<any[]>([]);
 
-    const apiKey = "d61b770d0f5b45a4911151951250212";
-
     /* -------------------------------
        🌟 Debounce helper
     ---------------------------------*/
@@ -88,26 +87,19 @@ export default {
         timer = window.setTimeout(() => fn(...args), delay);
       };
     }
-
-    /* -------------------------------
-       🌟 Fetch suggestions (debounced)
-    ---------------------------------*/
     const fetchSuggestions = debounce(async (text: string) => {
       if (!text) {
         results.value = [];
         return;
       }
 
-      const url = `https://api.weatherapi.com/v1/search.json?key=${apiKey}&q=${text}`;
+      const url = `${API_URL}search.json?key=${API_KEY}&q=${text}`;
       const res = await fetch(url);
       results.value = await res.json();
     }, 350);
 
     watch(query, (val) => fetchSuggestions(val));
 
-    /* -------------------------------
-       🌟 Select city from dropdown
-    ---------------------------------*/
     const select = (city: any) => {
       local.value.push({
         name: `${city.name}, ${city.country}`,
@@ -119,10 +111,6 @@ export default {
       results.value = [];
       query.value = "";
     };
-
-    /* -------------------------------
-       🌟 Add first result (Enter key)
-    ---------------------------------*/
     const addFirstResult = () => {
       if (results.value.length > 0) {
         select(results.value[0]);

@@ -1,5 +1,6 @@
 <script lang="ts">
 import { ref, computed, watch, PropType, onMounted } from "vue";
+import {API_KEY, API_URL} from "../config/weather";
 
 export default {
   name: "WeatherWidget",
@@ -18,7 +19,6 @@ export default {
   emits: ["open-settings", "update-city"],
 
   setup(props, { emit }) {
-    const apiKey = "d61b770d0f5b45a4911151951250212";
 
     const loading = ref(true);
     const data = ref<any[]>([]);
@@ -34,7 +34,7 @@ export default {
       data.value = [];
 
       for (const c of props.cities) {
-        const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${c.lat},${c.lon}&aqi=no`;
+        const url = `${API_URL}current.json?key=${API_KEY}&q=${c.lat},${c.lon}&aqi=no`;
         const res = await fetch(url);
         data.value.push(await res.json());
       }
