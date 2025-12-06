@@ -22,12 +22,26 @@ Add the widget to any HTML file:
 
 <script src="https://TynysA.github.io/custom-vue-element-weather/dist/widget.js"></script>
 ```
+
+The widget supports two visual themes:
+
+- 🌞 **light** (default)  
+- 🌙 **dark**
+
+To set a theme, pass the `theme` attribute to the component:
+
+```html
+<weather-widget theme="light"></weather-widget>
+```
+
 --- 
 
 ## ✨ Features
 
 - 🌤️ **Weather data from WeatherAPI**
 - 📍 **Supports multiple saved cities**
+- 🧭 **Automatic "My Location" detection** (geolocation API)
+- 🌙 **Dark & Light theme support** (customizable via widget attribute)
 - 🔄 **Swipe slider between cities**
 - ••• **Navigation dots**
 - ⚙️ **Settings screen** (reorder, add, delete cities)
